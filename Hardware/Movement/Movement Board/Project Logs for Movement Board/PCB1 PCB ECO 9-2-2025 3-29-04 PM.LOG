@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=ENB_TIM2_CH4_M2 Pin=D?-1
+Removed Pin From Net: NetName=ENB_TIM2_CH3_M2 Pin=D?-6
+Change Component Designator: OldDesignator=D? NewDesignator=D2
+Added Pin To Net: NetName=ENB_TIM2_CH3_M2 Pin=D2-1
+Added Pin To Net: NetName=ENB_TIM2_CH4_M2 Pin=D2-6

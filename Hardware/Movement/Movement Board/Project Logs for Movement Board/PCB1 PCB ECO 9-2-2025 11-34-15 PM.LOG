@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=ENB_TIM2_CH4_M2 Pin=D2-1
+Added Component: Designator=*(STM 32 Black Pill)
+Change Net Name : Old Net Name=ENB_TIM2_CH1_M1 New Net Name=ENB_TIM2_CH1_M0
+Change Net Name : Old Net Name=IN1_M1 New Net Name=IN1_M0
+Change Net Name : Old Net Name=IN2_M1 New Net Name=IN2_M0
+Change Net Name : Old Net Name=IN3_M2 New Net Name=IN3_M3
+Change Net Name : Old Net Name=IN4_M2 New Net Name=IN4_M3
+Change Net Name : Old Net Name=TIM1CH1 New Net Name=TIM1_CH1
+Change Net Name : Old Net Name=TIM1CH2 New Net Name=TIM1_CH2
+Added Pin To Net: NetName=ENB_TIM2_CH4_M3 Pin=D2-1
+Added Net: Name=ENB_TIM2_CH4_M3
+Added Member To Class: ClassName=Sheet1 Member=Component * STM32 BLACK PILL
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1
+Added Rule: Name=Schematic Supply Nets_2

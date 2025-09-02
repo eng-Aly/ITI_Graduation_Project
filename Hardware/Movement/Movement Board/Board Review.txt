@@ -1,0 +1,32 @@
+ # Notes	
+Uploading pins A13 , A14 , A15 , B3 , B4  --> Usable during runtime
+
+Differential USB A11 , A12                --> usart communication with pi
+
+#Configuration 
+Encoder1->TIM1->A8,A9
+
+Encoder2->TIM3->A6,A7
+
+Encoder3->TIM4->B6,B7
+
+Encoder4->TIM5->A0,A2
+
+PWM1->TIM2-CH1->A15   #Issue 2
+
+PWM2->TIM2_CH2->B3    #Issue 3
+
+PWM3->TIM2_CH3->A2
+
+PWM4->TIM2_CH4->A3
+
+
+ 
+
+
+
+
+# Issues
+Encoder Power Input    --> Solved #takes 5V
+
+TIM2 Usage on A15 & B3 --> Solution reconfigure A15 & B3 from JTDI to timer after reset in the code 

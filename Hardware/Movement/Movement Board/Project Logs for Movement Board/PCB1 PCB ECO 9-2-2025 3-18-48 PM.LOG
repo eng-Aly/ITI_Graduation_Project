@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=+5 Pin=D6-1
+Removed Pin From Net: NetName=GND Pin=D6-2
+Removed Pin From Net: NetName=TIM5_CH2 Pin=D6-4
+Removed Pin From Net: NetName=TIM5_CH1 Pin=D6-5
+Added Pin To Net: NetName=TIM5_CH1 Pin=D6-1
+Added Pin To Net: NetName=TIM5_CH2 Pin=D6-2
+Added Pin To Net: NetName=GND Pin=D6-4
+Added Pin To Net: NetName=+5 Pin=D6-5

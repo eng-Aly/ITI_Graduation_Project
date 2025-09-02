@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=TIM5_CH1 Pin=D6-1
+Removed Pin From Net: NetName=TIM5_CH2 Pin=D6-2
+Removed Pin From Net: NetName=GND Pin=D6-4
+Removed Pin From Net: NetName=+5 Pin=D6-5
+Change Component Footprint: Designator=D3 Old Footprint=DATA_PIN_HEADER_5_2.54m New Footprint=DATA_PIN_HEADER_6_2.54m
+Change Component Footprint: Designator=D4 Old Footprint=DATA_PIN_HEADER_5_2.54m New Footprint=DATA_PIN_HEADER_6_2.54m
+Change Component Footprint: Designator=D5 Old Footprint=DATA_PIN_HEADER_5_2.54m New Footprint=DATA_PIN_HEADER_6_2.54m
+Change Component Footprint: Designator=D6 Old Footprint=DATA_PIN_HEADER_5_2.54m New Footprint=DATA_PIN_HEADER_6_2.54m
+Change Component Designator: OldDesignator=D? NewDesignator=D2
+Added Pin To Net: NetName=TIM5_CH1 Pin=D6-2
+Added Pin To Net: NetName=TIM5_CH2 Pin=D6-3
+Added Pin To Net: NetName=GND Pin=D6-5
+Added Pin To Net: NetName=+5 Pin=D6-6
+Added Member To Class: ClassName=Sheet1 Member=Component D3 Encoder 1
