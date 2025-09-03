@@ -1,0 +1,39 @@
+Removed Pin From Net: NetName=+5 Pin=D4-1
+Removed Pin From Net: NetName=GND Pin=D4-2
+Removed Pin From Net: NetName=TIM3_CH2 Pin=D4-4
+Removed Pin From Net: NetName=TIM3_CH1 Pin=D4-5
+Added Component: Designator=GND(KEYSTONE_1287)
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/1287/Keystone/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Keystone Electronics Corp."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "1287"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/1287/Keystone/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=Vin(KEYSTONE_1287)
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/1287/Keystone/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Keystone Electronics Corp."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "1287"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/1287/Keystone/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=TIM3_CH2 Pin=D4-2
+Added Pin To Net: NetName=TIM3_CH1 Pin=D4-3
+Added Pin To Net: NetName=GND Pin=D4-5
+Added Pin To Net: NetName=+5 Pin=D4-6
+Added Pin To Net: NetName=GND Pin=GND-1_1
+Added Pin To Net: NetName=GND Pin=GND-1_2
+Added Pin To Net: NetName=+5 Pin=Vin-1_1
+Added Pin To Net: NetName=+5 Pin=Vin-1_2
+Change Net Name : Old Net Name=ENB_TIM2_CH1_M1 New Net Name=ENB_TIM2_CH1_M0
+Change Net Name : Old Net Name=ENB_TIM2_CH4_M2 New Net Name=ENB_TIM2_CH4_M3
+Change Net Name : Old Net Name=IN1_M1 New Net Name=IN1_M0
+Change Net Name : Old Net Name=IN2_M1 New Net Name=IN2_M0
+Change Net Name : Old Net Name=IN3_M2 New Net Name=IN3_M3
+Change Net Name : Old Net Name=IN4_M2 New Net Name=IN4_M3
+Change Net Name : Old Net Name=TIM1CH1 New Net Name=TIM1_CH1
+Change Net Name : Old Net Name=TIM1CH2 New Net Name=TIM1_CH2
+Added Member To Class: ClassName=Sheet1 Member=Component GND terminal block 2
+Added Member To Class: ClassName=Sheet1 Member=Component Vin terminal block 1
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1
+Added Rule: Name=Schematic Supply Nets_2
