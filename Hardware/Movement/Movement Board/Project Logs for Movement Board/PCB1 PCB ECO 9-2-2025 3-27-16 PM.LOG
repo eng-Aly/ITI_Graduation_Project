@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=ENB_TIM2_CH1_M1 Pin=D1-1
-Removed Pin From Net: NetName=ENA_TIM2_CH2_M1 Pin=D1-6
-Added Pin To Net: NetName=ENA_TIM2_CH2_M1 Pin=D1-1
-Added Pin To Net: NetName=ENB_TIM2_CH1_M1 Pin=D1-6
