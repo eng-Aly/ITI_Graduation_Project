@@ -13,7 +13,7 @@
 #include "TIM_IC_prv.h"
 #include "TIM_IC_cfg.h"
 
-static void (*ic_callback)(u32 capture) = 0;
+void (*G_TIMFpt[4])(void)={NULL};
 
 static inline volatile TIMx_MemMap_t* TIM_GetInstance(TIM_Id_t id) {
     switch (id) {
@@ -172,10 +172,21 @@ void MTIM_vIC_ResetCounter(TIM_Id_t TimerId)
     TIMx->CNT = 0;
 }
 
+void MTIM_vTIMCallback(TIM_Id_t TimerId, void(*Fptr)(void)) {
+    u8 L_u8index = (TimerId==0)?0:TimerId==1?1:TimerId==2?2:3;
+    G_TIMFpt[L_u8index] = Fptr;
 
-void TimerIC_RegisterCallback(void (*cb)(uint32_t)) {
-    ic_callback = cb;
 }
+
+void TIM2_IRQHandler(){
+	if(G_TIMFpt[0] != NULL)
+	{
+		G_TIMFpt[0]();
+	}
+	// clear flag
+	TIM2->SR &= ~TIM_SR_CC1IF;
+}
+
 //
 //// Timer ISR
 //void TIM2_IRQHandler(void)
