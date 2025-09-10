@@ -1,24 +1,24 @@
-#pip install serial
+#pip install pyserial
 import serial
 import time
-import struct
-import numpy as np
+
 
 class UART:
     def __init__(self, port='COM3', baudrate=115200, timeout=1):
         self.ser = serial.Serial(port, baudrate, timeout=timeout)
     def send_data(self, data):
         if self.ser.is_open:
-            packed_data = struct.pack('f' * len(data), *data)
-            self.ser.write(packed_data)
+            msg=str(data)+'\n'
+            self.ser.write(msg.encode())  # send
         else:
             raise serial.SerialException("Serial port is not open.")
-    def receive_data(self, num_floats):
+    def receive_data(self):
         if self.ser.is_open:
-            byte_data = self.ser.read(num_floats * 4)
-            return struct.unpack('f' * num_floats, byte_data)
+            rcv = self.ser.readline().decode(errors="ignore")
+            return rcv.strip()
         else:
             raise serial.SerialException("Serial port is not open.")
     def close(self):
         if self.ser.is_open:
             self.ser.close()
+

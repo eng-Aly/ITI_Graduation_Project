@@ -1,5 +1,5 @@
 import numpy as np
-from kinematics.Kinematics import Kinematics
+from Drivers.Kinematics.Kinematics import Kinematics
 
 class KinematicsMecanum(Kinematics):
     """Class for handling kinematics of a mecanum wheel robot."""
