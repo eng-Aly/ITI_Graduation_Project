@@ -1,0 +1,14 @@
+# Notes
+
+1- install pyserial before running not serial if you have serial uninstall it
+    '''pip uninstall serial
+    '''
+
+
+    '''pip install pyserial
+    '''
+2- make sure the port is correct
+
+3- the python script runs faster than the UART a delay should be added but wait for test with the microcontroller
+
+4- method for which kinematics will be used still undetermined and both are sent in the main
