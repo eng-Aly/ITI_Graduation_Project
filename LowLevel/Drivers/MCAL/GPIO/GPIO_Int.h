@@ -13,7 +13,7 @@ typedef struct{
 	u16 GPIO_TYPE;	        	// Specifies the Type of GPIO				   	    // This Parameter can be value at @ref GPIO_TYPE_def
 	u16 GPIO_PU_PD;	        // Specifies if the GPIO is Pull-Up of Pull-Down						// This Parameter can be value at @ref GPIO_PU_PD_def
 	u16 GPIO_Output_Speed;		// Specifies the output speed of the GPIO
-   // This Parameter can be value at @ref GPIO_SPEED_define
+   	GPIO_TypeDef* GPIOx;	// This Parameter can be value at @ref GPIO_SPEED_define
 }GPIO_PinConfig_t;
 
 

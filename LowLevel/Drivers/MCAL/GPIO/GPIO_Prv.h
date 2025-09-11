@@ -36,12 +36,21 @@ typedef struct{
 #define GPIO_MODE_AF								0x00000002u      // Alternate function mode
 #define GPIO_MODE_Analog							0x00000003u      // Analog mode
 
-
-#define RCC_GPIOA_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 0))
-#define RCC_GPIOB_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 1))
-#define RCC_GPIOC_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 2))
-#define RCC_GPIOD_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 3))
-#define RCC_GPIOE_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 4))
-#define RCC_GPIOH_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 4))
+#define GPIO_AF0	0b0000
+#define GPIO_AF1	0b0001
+#define GPIO_AF2	0b0010
+#define GPIO_AF3	0b0011
+#define GPIO_AF4	0b0100
+#define GPIO_AF5	0b0101
+#define GPIO_AF6	0b0110
+#define GPIO_AF7	0b0111
+#define GPIO_AF8	0b1000
+#define GPIO_AF9	0b1001
+#define GPIO_AF10	0b1010
+#define GPIO_AF11	0b1011
+#define GPIO_AF12	0b1100
+#define GPIO_AF13	0b1101
+#define GPIO_AF14	0b1110
+#define GPIO_AF15	0b1111
 
 #endif 

@@ -47,6 +47,7 @@ typedef struct{
 #define RCC													((RCC_TypeDef *)RCC_BASE)
 
 //ENABLE
+#define RCC_SYSCFG_CLK_EN()					(RCC->APB2ENR |= (1 << 14))
 
 #define RCC_GPIOA_CLK_EN()					(RCC->AHB1ENR |= (1 << 0))
 #define RCC_GPIOB_CLK_EN()					(RCC->AHB1ENR |= (1 << 1))
@@ -93,5 +94,7 @@ typedef struct{
 #define RCC_TIMER3_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 1))
 #define RCC_TIMER4_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 2))
 #define RCC_TIMER5_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 3))
+
+
 
 #endif /* RCC_PRV_H_ */
