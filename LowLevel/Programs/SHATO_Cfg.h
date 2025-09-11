@@ -18,8 +18,7 @@ GPIO_PinConfig_t PA0 = {
 
 GPIO_PinConfig_t M1_DIR1 = {
     .GPIO_PinNumber = 12,      
-    .GPIO_MODE = GPIO_MODE_OP,      
-    .GPIO_AFx = GPIO_SPEED_HIGH,              
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,        
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -27,8 +26,7 @@ GPIO_PinConfig_t M1_DIR1 = {
 };
 GPIO_PinConfig_t M1_DIR2 = {
     .GPIO_PinNumber = 13,      
-    .GPIO_MODE = GPIO_MODE_OP,     
-    .GPIO_AFx = GPIO_SPEED_HIGH,              
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,        
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -47,8 +45,7 @@ GPIO_PinConfig_t M1_EN = {
 
 GPIO_PinConfig_t M2_DIR1 = {
     .GPIO_PinNumber = 14, 
-    .GPIO_MODE = GPIO_MODE_OP,      
-    .GPIO_AFx = GPIO_SPEED_HIGH,         
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,       
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -56,8 +53,7 @@ GPIO_PinConfig_t M2_DIR1 = {
 };
 GPIO_PinConfig_t M2_DIR2 = {
     .GPIO_PinNumber = 15,      
-    .GPIO_MODE = GPIO_MODE_OP,     
-    .GPIO_AFx = GPIO_SPEED_HIGH,             
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,        
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -77,8 +73,7 @@ GPIO_PinConfig_t M2_EN={
 
 GPIO_PinConfig_t M3_DIR1 = {
     .GPIO_PinNumber = 0,      
-    .GPIO_MODE = GPIO_MODE_OP,      
-    .GPIO_AFx = GPIO_SPEED_HIGH,             
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,        
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -87,8 +82,7 @@ GPIO_PinConfig_t M3_DIR1 = {
 
 GPIO_PinConfig_t M3_DIR2 = {
     .GPIO_PinNumber = 1,      
-    .GPIO_MODE = GPIO_MODE_OP,      
-    .GPIO_AFx = GPIO_SPEED_HIGH,              
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,        
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -109,8 +103,7 @@ GPIO_PinConfig_t M3_EN={
 
 GPIO_PinConfig_t M4_DIR1 = {
     .GPIO_PinNumber = 2,      
-    .GPIO_MODE = GPIO_MODE_AF,      
-    .GPIO_AFx = GPIO_AF1,              
+    .GPIO_MODE = GPIO_MODE_AF,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,       
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
@@ -118,8 +111,7 @@ GPIO_PinConfig_t M4_DIR1 = {
 };
 GPIO_PinConfig_t M4_DIR2 = {
     .GPIO_PinNumber = 10,      
-    .GPIO_MODE = GPIO_MODE_OP,      
-    .GPIO_AFx = GPIO_SPEED_HIGH,              
+    .GPIO_MODE = GPIO_MODE_OP,
     .GPIO_TYPE = GPIO_TYPE_PP,    
     .GPIO_PU_PD = GPIO_NO_PULL,       
     .GPIO_Output_Speed = GPIO_SPEED_HIGH, 
