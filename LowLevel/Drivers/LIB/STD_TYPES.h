@@ -1,6 +1,8 @@
 #ifndef LIB_STD_TYPES_H
 #define LIB_STD_TYPES_H
 
+#define NULL 							(void*)(0)
+
 typedef  unsigned char       u8;
 typedef unsigned short int   u16;
 typedef unsigned long int    u32;

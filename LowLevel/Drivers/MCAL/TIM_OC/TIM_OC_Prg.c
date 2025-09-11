@@ -1,32 +1,9 @@
-/*
- * stm32f401xc_Timer_driver.c
- *
- * Created on: Sep 1, 2025
- * Author: Ahmed Ezzat
- */
+#include "TIM_OC_Int.h"
 
-//------------------------------
-// Includes
-//------------------------------
-#include "stm32f401xc_Timer_driver.h"
-
-//============================================================
-
-/*
- * =======================================================
- * 					  Generic Variables
- * =======================================================
- */
 Timer_Config_t *G_Timer_config = NULL;
 
-//============================================================
 
-/*
- * =======================================================
- * 					Generic Functions
- * =======================================================
- *
- */
+ 
 static void MCAL_Timer_Start(Timer_Config_t *Timer_Config){
 	 // CEN
 	Timer_Config->BaseConfig.TIMERx->CR1 |= (1 << 0);
@@ -46,13 +23,7 @@ static void MCAL_Timer_PWM_Stop(Timer_Config_t *Timer_Config){
 	MCAL_Timer_Stop(Timer_Config);
 }
 
-//============================================================
 
-/*
- * ===================================================
- * 		 APIs Supported by "MCAL Timer DRIVER"
- * ===================================================
- */
 void MCAL_Timer_Init(Timer_Config_t *Timer_Config){
 	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
 	G_Timer_config = Timer_Config;
@@ -134,7 +105,7 @@ void MCAL_Timer_DeInit(Timer_Config_t *Timer_Config){
 	}
 }
 
-void MCAL_Timer_PWM_Init(Timer_Config_t *Timer_Config, uint32_t DutyCycle){
+void MCAL_Timer_PWM_Init(Timer_Config_t *Timer_Config, u32 DutyCycle){
 	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
 
 	G_Timer_config = Timer_Config;
@@ -213,14 +184,14 @@ void MCAL_Timer_PWM_Init(Timer_Config_t *Timer_Config, uint32_t DutyCycle){
 	}
 }
 
-void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, uint32_t DutyCycle){
-    uint32_t period = (1000000 / cfg->OCConfig->TIMER_Frequency) - 1;
+void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, u32 DutyCycle){
+    u32 period = (1000000 / cfg->OCConfig->TIMER_Frequency) - 1;
     cfg->BaseConfig.TIMERx->ARR = period;
 
-    uint32_t ARR = cfg->BaseConfig.TIMERx->ARR;
+    u32 ARR = cfg->BaseConfig.TIMERx->ARR;
     if (DutyCycle > 100) DutyCycle = 100;
 
-    uint32_t CCR = (DutyCycle * (ARR + 1)) / 100;
+    u32 CCR = (DutyCycle * (ARR + 1)) / 100;
 
     switch (cfg->OCConfig->TIMER_Channel){
     case TIMER_Channel_1:
@@ -236,6 +207,7 @@ void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, uint32_t DutyCycle){
     // Update
     cfg->BaseConfig.TIMERx->EGR |= (1 << 0);
 }
+
 
 void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config){
 	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
@@ -257,9 +229,10 @@ void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config){
 		RCC_TIMER5_CLK_EN();
 	}
 
-	switch(L_TIMERx){
-		case TIMER1:
-			// Set Channel 1 & Channel 2 as Input Capture
+	// was found as a switch on  struct changed to if
+	if (TIMER1==L_TIMERx)
+	{
+					// Set Channel 1 & Channel 2 as Input Capture
 			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
 			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
 
@@ -272,137 +245,94 @@ void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config){
 
 			// Enable Counter
 			L_TIMERx->CR1  	|= (1 << 0);
-
-			break;
-
-		case TIMER2:
-			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
-
-			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
-
-			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
-
-			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
-
-			break;
-
-		case TIMER3:
-			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
-
-			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
-
-			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
-
-			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
-
-			break;
-
-		case TIMER4:
-			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
-
-			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
-
-			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
-
-			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
-
-			break;
-
-		case TIMER5:
-			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
-
-			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
-
-			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
-
-			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
-
-			break;
 	}
-}
+	else if (TIMER2==L_TIMERx)
+	{
+		// Set Channel 1 & Channel 2 as Input Capture
+		L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
+		L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		// Set Active High Trigger on Channel 1 & Channel 2
+		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
+		L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		// Enable Counter
+		L_TIMERx->CR1  	|= (1 << 0);
 
-sint16_t MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config){
+	}
+	else if(TIMER3==L_TIMERx){
+		// Set Channel 1 & Channel 2 as Input Capture
+		L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
+		L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		// Set Active High Trigger on Channel 1 & Channel 2
+		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
+		L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		// Enable Counter
+		L_TIMERx->CR1  	|= (1 << 0);
+	}
+	else if(TIMER4==L_TIMERx){
+			// Set Channel 1 & Channel 2 as Input Capture
+			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
+			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+
+			// Set Active High Trigger on Channel 1 & Channel 2
+			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+
+			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
+			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+
+			// Enable Counter
+			L_TIMERx->CR1  	|= (1 << 0);
+
+	}
+	else if (TIMER5==L_TIMERx)
+	{
+			// Set Channel 1 & Channel 2 as Input Capture
+			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
+			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+
+			// Set Active High Trigger on Channel 1 & Channel 2
+			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+
+			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
+			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+
+			// Enable Counter
+			L_TIMERx->CR1  	|= (1 << 0);
+
+	}
+	}
+
+s16 MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config){
 	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
 
-	sint16_t EncoderCounts = 0;
+	s16 EncoderCounts = 0;
 
-	switch(L_TIMERx){
-		case TIMER1:
-			EncoderCounts -= (sint16_t)L_TIMERx->CNT;
+	if(TIMER1==L_TIMERx){
+			EncoderCounts -= (s16)L_TIMERx->CNT;
 			L_TIMERx->CNT = 0;
-			break;
-
-		case TIMER2:
-			EncoderCounts -= (sint32_t)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
-			break;
-
-		case TIMER3:
-			EncoderCounts -= (sint16_t)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
-			break;
-
-		case TIMER4:
-			EncoderCounts -= (sint16_t)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
-			break;
-
-		case TIMER5:
-			EncoderCounts -= (sint32_t)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
-			break;
 	}
+	else if(TIMER2==L_TIMERx){
+			EncoderCounts -= (s32)L_TIMERx->CNT;
+			L_TIMERx->CNT = 0;
+	}
+	else if(TIMER3==L_TIMERx){	
+			EncoderCounts -= (s16)L_TIMERx->CNT;
+			L_TIMERx->CNT = 0;
+	}	
+	else if(TIMER4==L_TIMERx){
+			EncoderCounts -= (s16)L_TIMERx->CNT;
+			L_TIMERx->CNT = 0;
+	}		
+
+	else if(TIMER2==L_TIMERx){
+			EncoderCounts -= (s32)L_TIMERx->CNT;
+			L_TIMERx->CNT = 0;
+	}		
+	
 	return EncoderCounts;
 }
-
-void MCAL_Timer_Encoder_SetCounts(Timer_Config_t *Timer_Config, sint16_t Counts){
-	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
-
-	switch(L_TIMERx){
-		case TIMER1:
-			(sint16_t)L_TIMERx->CNT = Counts;
-			break;
-
-		case TIMER2:
-			(sint32_t)L_TIMERx->CNT = Counts;
-			break;
-
-		case TIMER3:
-			(sint16_t)L_TIMERx->CNT = Counts;
-			break;
-
-		case TIMER4:
-			(sint16_t)L_TIMERx->CNT = Counts;
-			break;
-
-		case TIMER5:
-			(sint32_t)L_TIMERx->CNT = Counts;
-			break;
-	}
-}
-
-

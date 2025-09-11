@@ -12,51 +12,52 @@
 // Includes
 //------------------------------
 #include "stm32f401xc_gpio_driver.h"
-
+#include "../../LIB/STD_TYPES.h"
+#include "stm32f401xc.h"
 //============================================================
 
 //------------------------------------------
 // User Type Definitions (Structures)
 //------------------------------------------
 typedef struct{
-	uint8_t TXE  	 : 1; // TX buffer empty interrupt
-	uint8_t RXNE 	 : 1; // RX buffer not empty interrupt
-	uint8_t TCE 	 : 1; // Transmission complete interrupt
-	uint8_t Reserved : 5;
+	u8 		TXE  	 : 1; // TX buffer empty interrupt
+	u8 RXNE 	 : 1; // RX buffer not empty interrupt
+	u8 TCE 	 : 1; // Transmission complete interrupt
+	u8 Reserved : 5;
 }S_TIMER_IRQ_SRC;
 
 typedef struct{
 	TIMER_TypeDef 	*TIMERx					 		;
-	uint8_t		   	TIMER_CounterMode		 		;
-	uint16_t	   	TIMER_Prescaler			 		;
-	uint16_t	   	TIMER_AutoReload			 	;
-	uint8_t		   	TIMER_CLKDivision		 		;
-	uint8_t		   	TIMER_RepetitionCounter	 		;
+	u8	   			TIMER_CounterMode		 		;
+	u16	   			TIMER_Prescaler			 		;
+	u16   			TIMER_AutoReload			 	;
+	u16		   		TIMER_CLKDivision		 		;
+	u16		   		TIMER_RepetitionCounter	 		;
 }Timer_BaseConfig_t;
 
 typedef struct{
-	uint8_t 	TIMER_Channel			 		;
-	uint8_t  	TIMER_OutputCompare_Mode	 	;
-	uint32_t  	TIMER_OutputCompare_Pulse		;
-	uint8_t  	TIMER_OutputCompare_Polarity	;
-	uint8_t  	TIMER_Complement_Output	 		;
-    uint32_t 	TIMER_Frequency					;
+	u8 		TIMER_Channel			 		;
+	u8  	TIMER_OutputCompare_Mode	 	;
+	u32 	TIMER_OutputCompare_Pulse		;
+	u8  	TIMER_OutputCompare_Polarity	;
+	u8  	TIMER_Complement_Output	 		;
+    u32 	TIMER_Frequency					;
 }Timer_OutputCompare_Config_t;
 
 typedef struct{
-	uint8_t 	TIMER_Channel			 		;
-	uint8_t  	TIMER_InputCapture_Filter 		;
-	uint8_t  	TIMER_InputPrescaler 	 		;
-	uint8_t  	TIMER_InputPolarity 			;
-    uint8_t 	TIMER_InputSelection			;
+	u8 		TIMER_Channel			 		;
+	u8  	TIMER_InputCapture_Filter 		;
+	u8  	TIMER_InputPrescaler 	 		;
+	u8  	TIMER_InputPolarity 			;
+    u8 		TIMER_InputSelection			;
 }Timer_InputCapture_Config_t;
 
 typedef struct{
-	uint8_t  	TIMER_Encoder_Mode 		 		;
-	uint8_t  	TIMER_Input1Polarity 			;
-	uint8_t  	TIMER_InputCapture1_Filter 		;
-	uint8_t  	TIMER_Input2Polarity 			;
-	uint8_t  	TIMER_InputCapture2_Filter 		;
+	u8  	TIMER_Encoder_Mode 		 		;
+	u8  	TIMER_Input1Polarity 			;
+	u8  	TIMER_InputCapture1_Filter 		;
+	u8  	TIMER_Input2Polarity 			;
+	u8  	TIMER_InputCapture2_Filter 		;
 }Timer_Encoder_Config_t;
 
 typedef struct {
@@ -64,8 +65,8 @@ typedef struct {
 	Timer_OutputCompare_Config_t   	*OCConfig		 ;
 	Timer_InputCapture_Config_t	   	*ICConfig		 ;
 	Timer_Encoder_Config_t 			*EncoderConfig	 ;
-	uint8_t  	   					TIMER_IRQ_Enable ;
-    uint8_t 	   					TIMER_DMA_Enable ;
+	u8  	   					TIMER_IRQ_Enable ;
+    u8 	   					TIMER_DMA_Enable ;
 	void (*P_IRQ_Callback)(S_TIMER_IRQ_SRC irq_src)	 ;
 } Timer_Config_t;
 
@@ -263,7 +264,7 @@ void MCAL_Timer_PWM_Init(Timer_Config_t *Timer_Config, uint32_t DutyCycle);
 void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, uint32_t DutyCycle);
 
 void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config);
-sint16_t MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config);
+s16 MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config);
 void MCAL_Timer_Encoder_SetCounts(Timer_Config_t *Timer_Config, uint16_t Counts);
 
 #endif /* INC_STM32F401XC_TIMER_DRIVER_H_ */
