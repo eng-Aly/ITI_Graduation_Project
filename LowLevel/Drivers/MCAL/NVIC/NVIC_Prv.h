@@ -31,7 +31,9 @@
 #define TIMER4_IRQ			30
 #define TIMER5_IRQ			50
 
-// Enable
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+//NVIC IRQ Enable/Disable macros
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 // Enable
 #define NVIC_IRQ6_EXTI0_EN()				(NVIC_ISER0_BASE |= (1 << 6))
 #define NVIC_IRQ7_EXTI1_EN()				(NVIC_ISER0_BASE |= (1 << 7))

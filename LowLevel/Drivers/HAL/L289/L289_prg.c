@@ -60,7 +60,7 @@ void HL289_vTIM_Init(Timer_Config_t* TimerCfg,Timer_OutputCompare_Config_t* OCcf
     MCAL_Timer_PWM_Init(TimerCfg, 0);
 }
 
-void HL289_vSetSpeed(GPIO_PinConfig_t* dir1,GPIO_PinConfig_t* dir2,Timer_Config_t* TimerCfg,u8 speed)
+void HL289_vSetSpeed(GPIO_PinConfig_t* dir1,GPIO_PinConfig_t* dir2,Timer_Config_t* TimerCfg,s16 speed)
 {
     if(speed >0){
         MCAL_GPIO_WritePin(dir1->GPIOx,dir1->GPIO_PinNumber,HIGH);
@@ -76,5 +76,5 @@ void HL289_vSetSpeed(GPIO_PinConfig_t* dir1,GPIO_PinConfig_t* dir2,Timer_Config_
         MCAL_GPIO_WritePin(dir2->GPIOx,dir2->GPIO_PinNumber,LOW);
     }
     if (speed > 100) speed = 100;    //why not map to 255 ?! nig
-    MCAL_Timer_PWM_SetDuty(TimerCfg, speed);
+    MCAL_Timer_PWM_SetDuty(TimerCfg, (u8)(speed));
 }
