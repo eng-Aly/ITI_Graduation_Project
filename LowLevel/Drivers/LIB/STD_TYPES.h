@@ -11,7 +11,7 @@ typedef signed short int     s16;
 typedef signed long int      s32;
 typedef float                f32 ;       // 4 Byte
 typedef double               f64 ;       // 8 Byte
-typedef char                 c8 ;      // 1 Byte
+
 
 typedef struct
 {   

@@ -209,129 +209,125 @@ void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, u32 DutyCycle){
 }
 
 
-void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config){
-	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
-
+void MCAL_Timer_Encoder_Init(TIMER_TypeDef *Timer_Config){
 	/* Enable timer clock */
-	if(TIMER1 == (Timer_Config->BaseConfig.TIMERx)){
+	if(TIMER1 == Timer_Config){
 		RCC_TIMER1_CLK_EN();
 	}
-	else if(TIMER2 == (Timer_Config->BaseConfig.TIMERx)){
+	else if(TIMER2 == Timer_Config){
 		RCC_TIMER2_CLK_EN();
 	}
-	else if(TIMER3 == (Timer_Config->BaseConfig.TIMERx)){
+	else if(TIMER3 == Timer_Config){
 		RCC_TIMER3_CLK_EN();
 	}
-	else if(TIMER4 == (Timer_Config->BaseConfig.TIMERx)){
+	else if(TIMER4 == Timer_Config){
 		RCC_TIMER4_CLK_EN();
 	}
-	else if(TIMER5 == (Timer_Config->BaseConfig.TIMERx)){
+	else if(TIMER5 == Timer_Config){
 		RCC_TIMER5_CLK_EN();
 	}
 
 	// was found as a switch on  struct changed to if
-	if (TIMER1==L_TIMERx)
+	if (TIMER1==Timer_Config)
 	{
 					// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		Timer_Config->CCMR1 |= TIMER_CH1_IPC_TI1;
+		Timer_Config->CCMR1 |= TIMER_CH2_IPC_TI2;
 
 			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
 
 			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		Timer_Config->SMCR  |= TIMER_Encoder_Mode3;
 
 			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
+		Timer_Config->CR1  	|= (1 << 0);
 	}
-	else if (TIMER2==L_TIMERx)
+	else if (TIMER2==Timer_Config)
 	{
 		// Set Channel 1 & Channel 2 as Input Capture
-		L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-		L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		Timer_Config->CCMR1 |= TIMER_CH1_IPC_TI1;
+		Timer_Config->CCMR1 |= TIMER_CH2_IPC_TI2;
 		// Set Active High Trigger on Channel 1 & Channel 2
-		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
 		// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-		L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		Timer_Config->SMCR  |= TIMER_Encoder_Mode3;
 		// Enable Counter
-		L_TIMERx->CR1  	|= (1 << 0);
+		Timer_Config->CR1  	|= (1 << 0);
 
 	}
-	else if(TIMER3==L_TIMERx){
+	else if(TIMER3==Timer_Config){
 		// Set Channel 1 & Channel 2 as Input Capture
-		L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-		L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		Timer_Config->CCMR1 |= TIMER_CH1_IPC_TI1;
+		Timer_Config->CCMR1 |= TIMER_CH2_IPC_TI2;
 		// Set Active High Trigger on Channel 1 & Channel 2
-		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-		L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
 		// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-		L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		Timer_Config->SMCR  |= TIMER_Encoder_Mode3;
 		// Enable Counter
-		L_TIMERx->CR1  	|= (1 << 0);
+		Timer_Config->CR1  	|= (1 << 0);
 	}
-	else if(TIMER4==L_TIMERx){
+	else if(TIMER4==Timer_Config){
 			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		Timer_Config->CCMR1 |= TIMER_CH1_IPC_TI1;
+		Timer_Config->CCMR1 |= TIMER_CH2_IPC_TI2;
 
 			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
 
 			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		Timer_Config->SMCR  |= TIMER_Encoder_Mode3;
 
 			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
+		Timer_Config->CR1  	|= (1 << 0);
 
 	}
-	else if (TIMER5==L_TIMERx)
+	else if (TIMER5==Timer_Config)
 	{
 			// Set Channel 1 & Channel 2 as Input Capture
-			L_TIMERx->CCMR1 |= TIMER_CH1_IPC_TI1;
-			L_TIMERx->CCMR1 |= TIMER_CH2_IPC_TI2;
+		Timer_Config->CCMR1 |= TIMER_CH1_IPC_TI1;
+		Timer_Config->CCMR1 |= TIMER_CH2_IPC_TI2;
 
 			// Set Active High Trigger on Channel 1 & Channel 2
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
-			L_TIMERx->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH1;
+		Timer_Config->CCER  &= TIMER_OutputCompare_Polarity_High_CH2;
 
 			// Set Encoder Slave Mode Selection allowing Counter to Counts UP/DOWN for Both Channels
-			L_TIMERx->SMCR  |= TIMER_Encoder_Mode3;
+		Timer_Config->SMCR  |= TIMER_Encoder_Mode3;
 
 			// Enable Counter
-			L_TIMERx->CR1  	|= (1 << 0);
+		Timer_Config->CR1  	|= (1 << 0);
 
 	}
 	}
 
-s16 MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config){
-	TIMER_TypeDef *L_TIMERx = Timer_Config->BaseConfig.TIMERx;
-
+s16 MCAL_Timer_Encoder_GetCounts(TIMER_TypeDef *Timer_Config){
 	s16 EncoderCounts = 0;
 
-	if(TIMER1==L_TIMERx){
-			EncoderCounts -= (s16)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
+	if(TIMER1==Timer_Config){
+			EncoderCounts -= (s16)Timer_Config->CNT;
+			Timer_Config->CNT = 0;
 	}
-	else if(TIMER2==L_TIMERx){
-			EncoderCounts -= (s32)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
+	else if(TIMER2==Timer_Config){
+			EncoderCounts -= (s32)Timer_Config->CNT;
+			Timer_Config->CNT = 0;
 	}
-	else if(TIMER3==L_TIMERx){	
-			EncoderCounts -= (s16)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
+	else if(TIMER3==Timer_Config){
+			EncoderCounts -= (s16)Timer_Config->CNT;
+			Timer_Config->CNT = 0;
 	}	
-	else if(TIMER4==L_TIMERx){
-			EncoderCounts -= (s16)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
+	else if(TIMER4==Timer_Config){
+			EncoderCounts -= (s16)Timer_Config->CNT;
+			Timer_Config->CNT = 0;
 	}		
 
-	else if(TIMER2==L_TIMERx){
-			EncoderCounts -= (s32)L_TIMERx->CNT;
-			L_TIMERx->CNT = 0;
+	else if(TIMER2==Timer_Config){
+			EncoderCounts -= (s32)Timer_Config->CNT;
+			Timer_Config->CNT = 0;
 	}		
 	
 	return EncoderCounts;

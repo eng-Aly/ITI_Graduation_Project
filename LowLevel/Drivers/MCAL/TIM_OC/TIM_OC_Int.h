@@ -67,8 +67,8 @@ void MCAL_Timer_DeInit(Timer_Config_t *Timer_Config);
 void MCAL_Timer_PWM_Init(Timer_Config_t *Timer_Config, u32 DutyCycle);
 void MCAL_Timer_PWM_SetDuty(Timer_Config_t *cfg, u32 DutyCycle);
 
-void MCAL_Timer_Encoder_Init(Timer_Config_t *Timer_Config);
-s16 MCAL_Timer_Encoder_GetCounts(Timer_Config_t *Timer_Config);
+void MCAL_Timer_Encoder_Init(TIMER_TypeDef *Timer_Config);
+s16 MCAL_Timer_Encoder_GetCounts(TIMER_TypeDef *Timer_Config);
 // void MCAL_Timer_Encoder_SetCounts(Timer_Config_t *Timer_Config, u16 Counts);   //B3DEN
 
 

@@ -3,6 +3,44 @@
 #include "UART_Cfg.h"
 
 USART_PinConfig_t *G_UART_config = NULL;
+u8 G_Buffer[50];
+
+/*
+ * ========================================================================
+ * 				 				  ISR
+ * ========================================================================
+ */
+void USART1_IRQHandler(void){
+	S_USART_IRQ_SRC irq_src;
+
+	irq_src.TXE  = ((USART1->SR &  (1<<7)) >> 7);
+	irq_src.RXNE = ((USART1->SR &  (1<<5)) >> 5);
+	irq_src.TCE  = ((USART1->SR &  (1<<6)) >> 6);
+
+	G_UART_config->P_IRQ_CallBack(irq_src);
+}
+
+void USART2_IRQHandler(void){
+	S_USART_IRQ_SRC irq_src;
+
+	irq_src.TXE  = ((USART2->SR &  (1<<7)) >> 7);
+	irq_src.RXNE = ((USART2->SR &  (1<<5)) >> 5);
+	irq_src.TCE  = ((USART2->SR &  (1<<6)) >> 6);
+
+	G_UART_config->P_IRQ_CallBack(irq_src);
+}
+
+void USART6_IRQHandler(void){
+	S_USART_IRQ_SRC irq_src;
+
+	irq_src.TXE  = ((USART6->SR &  (1<<7)) >> 7);
+	irq_src.RXNE = ((USART6->SR &  (1<<5)) >> 5);
+	irq_src.TCE  = ((USART6->SR &  (1<<6)) >> 6);
+
+	G_UART_config->P_IRQ_CallBack(irq_src);
+}
+
+static void MCAL_USART_SetPins(USART_TypeDef *USARTx);
 
 void MCAL_UART_Init(USART_TypeDef *UARTx, USART_PinConfig_t *UART_config){
 	G_UART_config = UART_config;
@@ -110,7 +148,7 @@ void MCAL_UART_SendData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t 
 	}
 }
 
-void MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t polling_status){
+u8 MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t polling_status){
 	if(Enable == polling_status){
 		while (!(USARTx->SR & (1 << 5)));
 
@@ -160,6 +198,8 @@ void MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism
 			}
 		}
 	}
+
+	return (*PxBuffer);
 }
 
 void MCAL_UART_SendString(USART_TypeDef *USARTx, u8 *str){
@@ -169,11 +209,16 @@ void MCAL_UART_SendString(USART_TypeDef *USARTx, u8 *str){
 	}
 }
 
-void MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str){
+u8 *MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str){
 	u8 index = 0;
-	while(str[index] == '\r'){
-		MCAL_UART_ReceiveData(USARTx, &str[index++], Disable);
+	// carrige return
+	while(MCAL_UART_ReceiveData(USARTx, &str[index++], Disable)!='\r')
+	{
+		G_Buffer[index] = MCAL_UART_ReceiveData(USARTx, &str[index++], Disable);
+		index++;
 	}
+	G_Buffer[index] = '\0';
+	return G_Buffer;
 }
 
 

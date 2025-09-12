@@ -13,8 +13,10 @@
 #include "../../MCAL/GPIO/GPIO_Int.h"
 #include "../../MCAL/TIM_OC/TIM_OC_Int.h"
 
-void HEncoder_vInit(GPIO_PinConfig_t* dir1,GPIO_PinConfig_t* dir2,Timer_BaseConfig_t* Timerx);
+void HEncoder_vInit(GPIO_PinConfig_t* ch1,GPIO_PinConfig_t* ch2);
 void HEncoder_vTIM_Init(TIMER_TypeDef* Timer);
-s16 HEnocder_vGetCount(Timer_Config_t *Timer_Config);
+
+s16 HEncoder_vGetCounts(TIMER_TypeDef *Timer_Config);
+s16 HEncoder_vGetSpeed(Timer_Config_t *Timer_Config);
 
 #endif /* DRIVERS_HAL_ENCODER_ENCODER_INT_H_ */

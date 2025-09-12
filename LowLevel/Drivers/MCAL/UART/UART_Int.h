@@ -64,10 +64,10 @@ void MCAL_UART_Init(USART_TypeDef *UARTx, USART_PinConfig_t *UART_config);
 void MCAL_UART_DeInit(USART_TypeDef *UARTx);
 
 void MCAL_UART_SendData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t polling_status);
-void MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t polling_status);
+u8 MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t polling_status);
 
 void MCAL_UART_SendString(USART_TypeDef *USARTx, u8 *str);
-void MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str);
+u8 *MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str);
 
 
 #endif

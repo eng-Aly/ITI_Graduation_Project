@@ -6,16 +6,16 @@
 #include "../Drivers/MCAL/TIM_OC/TIM_OC_Int.h"
 #include "../Drivers/HAL/Encoder/Encoder_Int.h"
 #include "../Drivers/MCAL/UART/UART_Int.h"
-/*
-GPIO_PinConfig_t PA0 = {
-    .GPIO_PinNumber = 0,      / Pin 0 /
-    .GPIO_MODE = GPIO_MODE_OP,      /* Output mode /
-    .GPIO_AFx = GPIO_SPEED_HIGH,              /* No alternate function /
-    .GPIO_TYPE = GPIO_TYPE_PP,    /* Push-pull type /
-    .GPIO_PU_PD = GPIO_NO_PULL,        /* No pull-up/pull-down /
-    .GPIO_Output_Speed = GPIO_SPEED_HIGH, /* High speed /
-    .GPIOx = GPIOA
-};*/
+///*
+//GPIO_PinConfig_t PA0 = {
+//    .GPIO_PinNumber = 0,      / Pin 0 /
+//    .GPIO_MODE = GPIO_MODE_OP,      /* Output mode */
+//    .GPIO_AFx = GPIO_SPEED_HIGH,              /* No alternate function */
+//    .GPIO_TYPE = GPIO_TYPE_PP,    /* Push-pull type */
+//    .GPIO_PU_PD = GPIO_NO_PULL,        /* No pull-up/pull-down */
+//    .GPIO_Output_Speed = GPIO_SPEED_HIGH, /* High speed */
+//    .GPIOx = GPIOA
+//};*/ */
 
 
 // MOTORS
@@ -243,37 +243,38 @@ GPIO_PinConfig_t M4_ENC2={
 
 
 //UART
+#define DIFF_UART     USART1
 
-GPIO_PinConfig_t DIFF_UART_TX={
-    .GPIO_PinNumber=9,
-    .GPIO_AFx=GPIO_AF7,
-    .GPIO_MODE=GPIO_MODE_AF,
-    .GPIO_TYPE=GPIO_TYPE_PP,
-    .GPIO_PU_PD=GPIO_NO_PULL,
-    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
-    .GPIOx=GPIOA
-};
-
-GPIO_PinConfig_t DIFF_UART_TX={
-    .GPIO_PinNumber=10,
-    .GPIO_AFx=GPIO_AF7,
-    .GPIO_MODE=GPIO_MODE_AF,
-    .GPIO_TYPE=GPIO_TYPE_PP,
-    .GPIO_PU_PD=GPIO_NO_PULL,
-    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
-    .GPIOx=GPIOA
-};
+//GPIO_PinConfig_t DIFF_UART_TX={
+//    .GPIO_PinNumber=9,
+//    .GPIO_AFx=GPIO_AF7,
+//    .GPIO_MODE=GPIO_MODE_AF,
+//    .GPIO_TYPE=GPIO_TYPE_PP,
+//    .GPIO_PU_PD=GPIO_NO_PULL,
+//    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
+//    .GPIOx=GPIOA
+//};
+//
+//GPIO_PinConfig_t DIFF_UART_RX={
+//    .GPIO_PinNumber=10,
+//    .GPIO_AFx=GPIO_AF7,
+//    .GPIO_MODE=GPIO_MODE_AF,
+//    .GPIO_TYPE=GPIO_TYPE_PP,
+//    .GPIO_PU_PD=GPIO_NO_PULL,
+//    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
+//    .GPIOx=GPIOA
+//};
 
 USART_PinConfig_t DIFF_UART_TX_Cfg={
     .USART_Mode= UART_MODE_TX_RX,
     .USART_BaudRate=9600,
     .USART_IRQ_Enable=UART_IRQ_ENABLE_RXNEIE,
-    .USART_StopBits=UART_StopBits_1_Half_Bit,
+    .USART_StopBits=UART_StopBits_1Bit,
     .USART_Sampling=UART_Sampling_16,
     .USART_HW_FlowCTRL=UART_HW_FLW_CTRL_RTS_DIS,
     .USART_ParityMode=UART_Parity_DIS,
     .USART_PayLoad_Lenght=UART_PayLoad_Length_8Bits,
-    .P_IRQ_CallBack=NULL     
+    .P_IRQ_CallBack=NULL
 };
  
 
@@ -299,9 +300,6 @@ typedef struct {
 	void (*P_IRQ_CallBack)(S_USART_IRQ_SRC irq_src);	// Set the C function which will be call when interrupt happens
 }USART_PinConfig_t;
 */
-
-
-#define DIFF_UART     USART1
 
 
 void Clock_Init(void){
