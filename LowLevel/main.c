@@ -20,9 +20,10 @@ u8 *msg;
 
 void UART_RX_INT_HANDLER(S_USART_IRQ_SRC irq_src){
 	if(irq_src.RXNE){
-		MCAL_UART_ReceiveData(DIFF_UART, CONTROL_MSG, Disable);
-		MCAL_GPIO_TogglePin(GPIOA, 0);
-        MCAL_UART_SendData(DIFF_UART, CONTROL_MSG, Disable);
+		//MCAL_UART_ReceiveData(DIFF_UART, CONTROL_MSG, Disable);  --> working test
+        MCAL_UART_ReceiveString(DIFF_UART, CONTROL_MSG);
+		//MCAL_GPIO_TogglePin(GPIOA, 0);                           --> working test
+        //MCAL_UART_SendData(DIFF_UART, CONTROL_MSG, Disable);     --> working test
 
 		s16 *targets[4] = { &M1_SETPOINT, &M2_SETPOINT, &M3_SETPOINT, &M4_SETPOINT };
 

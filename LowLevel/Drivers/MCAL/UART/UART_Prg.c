@@ -209,18 +209,24 @@ void MCAL_UART_SendString(USART_TypeDef *USARTx, u8 *str){
 	}
 }
 
-u8 *MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str){
-	u8 index = 0;
-	// carrige return
-	while(MCAL_UART_ReceiveData(USARTx, &str[index++], Disable)!='\r')
-	{
-		G_Buffer[index] = MCAL_UART_ReceiveData(USARTx, &str[index++], Disable);
-		index++;
-	}
-	G_Buffer[index] = '\0';
-	return G_Buffer;
-}
+u8 *MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str) {
+    u8 index = 0;
+    u8 data;
 
+    while (1) {
+        // receive one character
+        data = MCAL_UART_ReceiveData(USARTx, &str[index++], Disable);
+
+        if (data == '\r') {       // stop on carriage return
+            break;
+        }
+
+        str[index++] = data;      // store into buffer
+    }
+
+    str[index] = '\0';  // null terminate
+    return str;
+}
 
 static void MCAL_USART_SetPins(USART_TypeDef *USARTx){
 	GPIO_PinConfig_t USART_PinConfig;
