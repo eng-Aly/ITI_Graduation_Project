@@ -89,4 +89,56 @@ typedef struct{
 #define GPIOBEN		1
 
 
+
+
+//ENABLE
+#define RCC_SYSCFG_CLK_EN()					(RCC->APB2ENR |= (1 << 14))
+
+#define RCC_GPIOA_CLK_EN()					(RCC->AHB1ENR |= (1 << 0))
+#define RCC_GPIOB_CLK_EN()					(RCC->AHB1ENR |= (1 << 1))
+#define RCC_GPIOC_CLK_EN()					(RCC->AHB1ENR |= (1 << 2))
+#define RCC_GPIOD_CLK_EN()					(RCC->AHB1ENR |= (1 << 3))
+#define RCC_GPIOE_CLK_EN()					(RCC->AHB1ENR |= (1 << 4))
+#define RCC_GPIOH_CLK_EN()					(RCC->AHB1ENR |= (1 << 7))
+
+#define RCC_USART1_CLK_EN()					(RCC->APB2ENR |= (1 << 4))
+#define RCC_USART2_CLK_EN()					(RCC->APB1ENR |= (1 << 17))
+#define RCC_USART6_CLK_EN()					(RCC->APB2ENR |= (1 << 5))
+
+#define RCC_SPI1_CLK_EN()					(RCC->APB2ENR |= (1 << 12))
+#define RCC_SPI2_CLK_EN()					(RCC->APB1ENR |= (1 << 14))
+#define RCC_SPI3_CLK_EN()					(RCC->APB1ENR |= (1 << 15))
+
+#define RCC_TIMER1_CLK_EN()					(RCC->APB2ENR |= (1 << 0))
+#define RCC_TIMER2_CLK_EN()					(RCC->APB1ENR |= (1 << 0))
+#define RCC_TIMER3_CLK_EN()					(RCC->APB1ENR |= (1 << 1))
+#define RCC_TIMER4_CLK_EN()					(RCC->APB1ENR |= (1 << 2))
+#define RCC_TIMER5_CLK_EN()					(RCC->APB1ENR |= (1 << 3))
+
+
+// Reset
+#define RCC_SYSCFG_CLK_RST_SET()			(RCC->APB2RSTR |= (1 << 14))
+
+#define RCC_GPIOA_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 0))
+#define RCC_GPIOB_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 1))
+#define RCC_GPIOC_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 2))
+#define RCC_GPIOD_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 3))
+#define RCC_GPIOE_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 4))
+#define RCC_GPIOH_CLK_RST_SET()				(RCC->AHB1RSTR |= (1 << 4))
+
+#define RCC_USART1_CLK_RST_SET()			(RCC->APB2RSTR |= (1 << 4))
+#define RCC_USART2_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 17))
+#define RCC_USART6_CLK_RST_SET()			(RCC->APB2RSTR |= (1 << 5))
+
+#define RCC_SPI1_CLK_RST_SET()				(RCC->APB2RSTR |= (1 << 12))
+#define RCC_SPI2_CLK_RST_SET()				(RCC->APB1RSTR |= (1 << 14))
+#define RCC_SPI3_CLK_RST_SET()				(RCC->APB1RSTR |= (1 << 15))
+
+#define RCC_TIMER1_CLK_RST_SET()			(RCC->APB2RSTR |= (1 << 0))
+#define RCC_TIMER2_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 0))
+#define RCC_TIMER3_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 1))
+#define RCC_TIMER4_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 2))
+#define RCC_TIMER5_CLK_RST_SET()			(RCC->APB1RSTR |= (1 << 3))
+
+
 #endif /* MCAL_RCC_PRV_H_ */

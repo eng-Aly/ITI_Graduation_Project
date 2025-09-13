@@ -82,6 +82,7 @@ typedef struct
 #define AF6			6
 
 #define GPIO_AF7			7
+#define GPIO_AF8			8
 #define AF8			8
 #define AF9			9
 #define AF10		10

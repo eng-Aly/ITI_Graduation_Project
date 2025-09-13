@@ -9,6 +9,9 @@
 #ifndef MCAL_NVIC_NVIC_INT_H_
 #define MCAL_NVIC_NVIC_INT_H_
 
+#include "NVIC_prv.h"
+#include "NVIC_cfg.h"
+
 typedef enum{
 	Group16Sub0 = 3,
 	Group8Sub2,
@@ -31,8 +34,8 @@ void MNVIC_vSetPeripheralPeriority(u8 A_u8Position, u8 A_u8Group, u8 A_u8SubGrou
 /***************************************************************************************
 	| IRQ Number | Position in NVIC                                  | Interrupt Source |
 	| ---------- | ------------------------------------------------- | ---------------- |
-	| 0–15       | Cortex-M exceptions (Reset, NMI, HardFault, etc.) |                  |
-	| 6          | EXTI Line0 interrupt (for PA0, PB0, PC0, …)       |                  |
+	| 0ï¿½15       | Cortex-M exceptions (Reset, NMI, HardFault, etc.) |                  |
+	| 6          | EXTI Line0 interrupt (for PA0, PB0, PC0, ï¿½)       |                  |
 	| 7          | EXTI Line1                                        |                  |
 	| 8          | EXTI Line2                                        |                  |
 	| 9          | EXTI Line3                                        |                  |

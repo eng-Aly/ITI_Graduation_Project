@@ -227,41 +227,54 @@ u8 *MCAL_UART_ReceiveString(USART_TypeDef *USARTx, u8 *str) {
     str[index] = '\0';  // null terminate
     return str;
 }
+/*
+typedef struct
+{
+	u8 Port;
+	u8 Pin;
+	u8 Mode;
+	u8 OutputType;
+	u8 Speed;
+	u8 PullType;
+	u8 Altfunc;
+}GPIOx_PinConfig_t;
+GPIO_MODE_ALF
+*/
 
 static void MCAL_USART_SetPins(USART_TypeDef *USARTx){
-	GPIO_PinConfig_t USART_PinConfig;
+	GPIOx_PinConfig_t USART_PinConfig;
 
 	if(USARTx == USART1){
-		USART_PinConfig.GPIO_PinNumber = 9;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 9;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// RX  ===> PA10uint8_t
-		USART_PinConfig.GPIO_PinNumber = 10;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 10;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// CLK ===> PA8
-		USART_PinConfig.GPIO_PinNumber = 8;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 8;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// CTS ===> PA11
 		if((G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_CTS) | (G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_RTS)){
-			USART_PinConfig.GPIO_PinNumber = 11;
-			USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-			USART_PinConfig.GPIO_AFx = GPIO_AF7;
-			MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+			USART_PinConfig.Pin = 11;
+			USART_PinConfig.Mode = GPIO_MODE_ALF;
+			USART_PinConfig.Altfunc = GPIO_AF7;
+			MGPIO_vPinInit(&USART_PinConfig);
 		}
 		// RTS ===> PA12
 		if((G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_CTS) | (G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_RTS)){
-			USART_PinConfig.GPIO_PinNumber = 12;
-			USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-			USART_PinConfig.GPIO_AFx = GPIO_AF7;
-			MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+			USART_PinConfig.Pin = 12;
+			USART_PinConfig.Mode = GPIO_MODE_ALF;
+			USART_PinConfig.Altfunc = GPIO_AF7;
+			MGPIO_vPinInit(&USART_PinConfig);
 		}
 	}
 
@@ -273,36 +286,36 @@ static void MCAL_USART_SetPins(USART_TypeDef *USARTx){
 		// RTS ===> PA1
 
 		// TX  ===> PA2
-		USART_PinConfig.GPIO_PinNumber = 2;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 2;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// RX  ===> PA3
-		USART_PinConfig.GPIO_PinNumber = 3;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 3;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// CLK ===> PA4
-		USART_PinConfig.GPIO_PinNumber = 4;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF7;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 4;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF7;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// CTS ===> PA0
 		if((G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_CTS) | (G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_RTS)){
-			USART_PinConfig.GPIO_PinNumber = 0;
-			USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-			USART_PinConfig.GPIO_AFx = GPIO_AF7;
-			MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+			USART_PinConfig.Pin = 0;
+			USART_PinConfig.Mode = GPIO_MODE_ALF;
+			USART_PinConfig.Altfunc = GPIO_AF7;
+			MGPIO_vPinInit(&USART_PinConfig);
 		}
 		// RTS ===> PA1
 		if((G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_CTS) | (G_UART_config->USART_HW_FlowCTRL == UART_HW_FLW_CTRL_RTS)){
-			USART_PinConfig.GPIO_PinNumber = 1;
-			USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-			USART_PinConfig.GPIO_AFx = GPIO_AF7;
-			MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+			USART_PinConfig.Pin = 1;
+			USART_PinConfig.Mode = GPIO_MODE_ALF;
+			USART_PinConfig.Altfunc = GPIO_AF7;
+			MGPIO_vPinInit(&USART_PinConfig);
 		}
 	}
 
@@ -311,15 +324,15 @@ static void MCAL_USART_SetPins(USART_TypeDef *USARTx){
 		// RX  ===> PA12
 
 		// TX  ===> PA11
-		USART_PinConfig.GPIO_PinNumber = 11;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF8;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 11;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF8;
+		MGPIO_vPinInit(&USART_PinConfig);
 
 		// RX  ===> PA12
-		USART_PinConfig.GPIO_PinNumber = 12;
-		USART_PinConfig.GPIO_MODE = GPIO_MODE_AF;
-		USART_PinConfig.GPIO_AFx = GPIO_AF8;
-		MCAL_GPIO_Init(GPIOA, &USART_PinConfig);
+		USART_PinConfig.Pin = 12;
+		USART_PinConfig.Mode = GPIO_MODE_ALF;
+		USART_PinConfig.Altfunc = GPIO_AF8;
+		MGPIO_vPinInit(&USART_PinConfig);
 	}
 }

@@ -1,5 +1,11 @@
 #include "Programs/Shato_Sensors_Cfg.h"
-void PrintDistance(u16 distance);
+
+
+void PrintDistance(u16 distance) {
+    MUSART_vSendString("Distance: ");
+    MUSART_vSendNumber(distance);
+    MUSART_vSendString(" cm\r\n");
+}
 
 void SETUP(){
 	MRCC_vInit();
@@ -14,11 +20,7 @@ void SETUP(){
 	MGPIO_vPinInit(& LED5);
 	HCSR04_vInit(&us1);
 }
-void PrintDistance(u16 distance) {
-    MUSART_vSendString("Distance: ");
-    MUSART_vSendNumber(distance);
-    MUSART_vSendString(" cm\r\n");
-}
+
 
 void LOOP(){
 		HCSR04_vTrigger(&us1);

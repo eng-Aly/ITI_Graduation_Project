@@ -53,4 +53,19 @@ HCSR04_Handle_t us1 = {
 	.EchoPort    = GPIO_PORTA, .EchoPin    = GPIO_PIN0,
 	.EchoAF      = GPIO_AF1,
 	.TimerId     = TIM_ID_2, .Channel    = TIM_CHANNEL1
-};            
+};
+
+
+#define DIFF_UART     USART1
+
+USART_PinConfig_t DIFF_UART_TX_Cfg={
+    .USART_Mode= UART_MODE_TX_RX,
+    .USART_BaudRate=9600,
+    .USART_IRQ_Enable=UART_IRQ_ENABLE_RXNEIE,
+    .USART_StopBits=UART_StopBits_1Bit,
+    .USART_Sampling=UART_Sampling_16,
+    .USART_HW_FlowCTRL=UART_HW_FLW_CTRL_RTS_DIS,
+    .USART_ParityMode=UART_Parity_DIS,
+    .USART_PayLoad_Lenght=UART_PayLoad_Length_8Bits,
+    .P_IRQ_CallBack=NULL
+};
