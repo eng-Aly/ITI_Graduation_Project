@@ -205,7 +205,7 @@ u8 MCAL_UART_ReceiveData(USART_TypeDef *USARTx, u8 *PxBuffer, PollingMechanism_t
 void MCAL_UART_SendString(USART_TypeDef *USARTx, u8 *str){
 	u8 index = 0;
 	while(str[index] != '\0'){
-		MCAL_UART_SendData(USARTx, &str[index++], Disable);
+		MCAL_UART_SendData(USARTx, &str[index++], Enable);
 	}
 }
 

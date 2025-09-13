@@ -16,13 +16,16 @@ s16 M3_ENC_SPEED;
 s16 M4_ENC_SPEED;
 
 u8 CONTROL_MSG[10];
-u8 *msg;
+
+u8 *msg = NULL;
+
+u8 buffer;
+u8 number = '1';
 
 void UART_RX_INT_HANDLER(S_USART_IRQ_SRC irq_src){
 	if(irq_src.RXNE){
-		MCAL_UART_ReceiveData(DIFF_UART, CONTROL_MSG, Disable);
-		MCAL_GPIO_TogglePin(GPIOA, 0);
-        MCAL_UART_SendData(DIFF_UART, CONTROL_MSG, Disable);
+		MCAL_GPIO_TogglePin(GPIOC, 13);
+		MCAL_UART_ReceiveData(USED_USART, CONTROL_MSG, Disable);
 
 		s16 *targets[4] = { &M1_SETPOINT, &M2_SETPOINT, &M3_SETPOINT, &M4_SETPOINT };
 
@@ -31,10 +34,10 @@ void UART_RX_INT_HANDLER(S_USART_IRQ_SRC irq_src){
 
 		for (u8 i = 0; CONTROL_MSG[i] != '\0'; i++) {
 			if (CONTROL_MSG[i] >= '0' && CONTROL_MSG[i] <= '9') {
-				num = num * 10 + (CONTROL_MSG[i] - '0');  // build number
+				num = num * 10 + (CONTROL_MSG[i] - '0');
 			} else if (CONTROL_MSG[i] == ',') {
 				if (idx < 4) {
-					*targets[idx] = num;  // store into correct speedX
+					*targets[idx] = num;
 				}
 				idx++;
 				num = 0;
@@ -93,15 +96,19 @@ void SETUP(void){
 
     DIFF_UART_TX_Cfg.P_IRQ_CallBack=UART_RX_INT_HANDLER;
 
-    MCAL_UART_Init(DIFF_UART,&DIFF_UART_TX_Cfg);
+    MCAL_UART_Init(USED_USART,&DIFF_UART_TX_Cfg);
 
+	MCAL_GPIO_Init(GPIOC, &pin);
 }
 
-void loop_test(void){
-    s8 buffer[30];
+void loop(void){
+    u8 buffer[30];
     s8 temp[8];
     u8 pos = 0, i;
 
+    for(i = 0; i < sizeof(buffer); i++) {
+        buffer[i] = 0;
+    }
 
     HL289_vSetSpeed(&M1_DIR1,&M1_DIR2,&M1_EN_TIMER_Cfg,M1_SETPOINT);
     HL289_vSetSpeed(&M2_DIR1,&M2_DIR2,&M2_EN_TIMER_Cfg,M2_SETPOINT);
@@ -127,18 +134,8 @@ void loop_test(void){
     for (i = 0; temp[i]; i++) buffer[pos++] = temp[i];
     buffer[pos++] = ',';
 
-    MCAL_UART_SendString(DIFF_UART, (u8 *)buffer);
+    MCAL_UART_SendString(USED_USART, (u8 *)buffer);
 
-    for(int i=0;i<1000000;i++); //delay
-    HL289_vSetSpeed(&M1_DIR1,&M1_DIR2,&M1_EN_TIMER_Cfg,0);
-    HL289_vSetSpeed(&M2_DIR1,&M2_DIR2,&M2_EN_TIMER_Cfg,0);
-    HL289_vSetSpeed(&M3_DIR1,&M3_DIR2,&M3_EN_TIMER_Cfg,0);
-    HL289_vSetSpeed(&M4_DIR1,&M4_DIR2,&M4_EN_TIMER_Cfg,0);
-    for(int i=0;i<1000000;i++); //delay
-    HL289_vSetSpeed(&M1_DIR1,&M1_DIR2,&M1_EN_TIMER_Cfg,-50);
-    HL289_vSetSpeed(&M2_DIR1,&M2_DIR2,&M2_EN_TIMER_Cfg,-50);
-    HL289_vSetSpeed(&M3_DIR1,&M3_DIR2,&M3_EN_TIMER_Cfg,-50);
-    HL289_vSetSpeed(&M4_DIR1,&M4_DIR2,&M4_EN_TIMER_Cfg,-50);
 }
 
 int main(void){
@@ -149,18 +146,10 @@ int main(void){
     while (((RCC->CFGR >> 2) & 0x3) != 0x1);
 
     SETUP();
-	GPIO_PinConfig_t pin;
-	pin.GPIO_PinNumber = 0;
-	pin.GPIO_MODE = GPIO_MODE_OP;
-	pin.GPIO_Output_Speed = GPIO_SPEED_LOW;
-	pin.GPIO_TYPE = GPIO_TYPE_PP;
-	pin.GPIO_PU_PD = GPIO_NO_PULL;
-	MCAL_GPIO_Init(GPIOA, &pin);
-
-	MCAL_UART_ReceiveString(USART1,CONTROL_MSG);
 
     while(1){
-        loop_test();
+        loop();
+        for(u32 i = 0; i < 1000000; i++);
     }
     return 0;
 }

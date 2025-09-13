@@ -243,27 +243,7 @@ GPIO_PinConfig_t M4_ENC2={
 
 
 //UART
-#define DIFF_UART     USART1
-
-//GPIO_PinConfig_t DIFF_UART_TX={
-//    .GPIO_PinNumber=9,
-//    .GPIO_AFx=GPIO_AF7,
-//    .GPIO_MODE=GPIO_MODE_AF,
-//    .GPIO_TYPE=GPIO_TYPE_PP,
-//    .GPIO_PU_PD=GPIO_NO_PULL,
-//    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
-//    .GPIOx=GPIOA
-//};
-//
-//GPIO_PinConfig_t DIFF_UART_RX={
-//    .GPIO_PinNumber=10,
-//    .GPIO_AFx=GPIO_AF7,
-//    .GPIO_MODE=GPIO_MODE_AF,
-//    .GPIO_TYPE=GPIO_TYPE_PP,
-//    .GPIO_PU_PD=GPIO_NO_PULL,
-//    .GPIO_Output_Speed=GPIO_SPEED_HIGH,
-//    .GPIOx=GPIOA
-//};
+#define USED_USART     USART6
 
 USART_PinConfig_t DIFF_UART_TX_Cfg={
     .USART_Mode= UART_MODE_TX_RX,
@@ -276,7 +256,14 @@ USART_PinConfig_t DIFF_UART_TX_Cfg={
     .USART_PayLoad_Lenght=UART_PayLoad_Length_8Bits,
     .P_IRQ_CallBack=NULL
 };
- 
+
+GPIO_PinConfig_t pin={
+	.GPIO_PinNumber = 13,
+	.GPIO_MODE = GPIO_MODE_OP,
+	.GPIO_Output_Speed = GPIO_SPEED_LOW,
+	.GPIO_TYPE = GPIO_TYPE_PP,
+	.GPIO_PU_PD = GPIO_NO_PULL,
+};
 
 /*
 typedef struct {
