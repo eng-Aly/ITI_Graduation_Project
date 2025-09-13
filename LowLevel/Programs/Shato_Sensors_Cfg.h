@@ -7,6 +7,7 @@
 #include "../Drivers/HAL/HC-SR04/HC-SR04_int.h"
 #include "../Drivers/LIB/STD_TYPES.h"
 #include "../Drivers/LIB/BIT_MATH.h"
+#include "../Drivers/UART/UART_Int.h"
 
 #define DELAY_MS(d)		do{unsigned int i = d*4000;while(i--){asm("NOP");} }while(0)
 
