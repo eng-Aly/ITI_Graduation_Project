@@ -52,5 +52,7 @@ void MTIM_vIC_DisableInterrupt(TIM_Id_t TimerId, TIM_Channel_t Channel);
 u32 MTIM_u32IC_GetCapture(TIM_Id_t TimerId, TIM_Channel_t Channel);
 void MTIM_vIC_ResetCounter(TIM_Id_t TimerId);
 void MTIM_vTIMCallback(TIM_Id_t TimerId, void(*Fptr)(void));
+void MTIM_vIC_EnableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel);
+void MTIM_vIC_DisableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel);
 
 #endif /* MCAL_TIM_IC_TIM_IC_INT_H_ */

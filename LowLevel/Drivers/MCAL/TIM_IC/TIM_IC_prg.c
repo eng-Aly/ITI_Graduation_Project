@@ -55,8 +55,8 @@ void MTIM_vIC_Init(const TIM_IC_Config_t *cfg)
             TIMx->CCER |= (TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP_Msk);
 
         // Enable capture + interrupt
-        SET_BIT(TIMx->CCER, TIM_CCER_CC1E);
-        SET_BIT(TIMx->DIER, TIM_DIER_CC1IE);
+//        SET_BIT(TIMx->CCER, TIM_CCER_CC1E);
+//        SET_BIT(TIMx->DIER, TIM_DIER_CC1IE);
         break;
 
     case TIM_CHANNEL2:
@@ -101,7 +101,8 @@ void MTIM_vIC_Init(const TIM_IC_Config_t *cfg)
 
 u8 MTIM_u8IC_IsCaptureFlag(TIM_Id_t TimerId, TIM_Channel_t Channel)
 {
-    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+//    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+	volatile TIMx_MemMap_t *TIMx = TIM2;
 
     switch(Channel)
     {
@@ -115,7 +116,8 @@ u8 MTIM_u8IC_IsCaptureFlag(TIM_Id_t TimerId, TIM_Channel_t Channel)
 
 void MTIM_vIC_ClearFlag(TIM_Id_t TimerId, TIM_Channel_t Channel)
 {
-    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+//    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+	volatile TIMx_MemMap_t *TIMx = TIM2;
 
     switch(Channel)
     {
@@ -128,7 +130,8 @@ void MTIM_vIC_ClearFlag(TIM_Id_t TimerId, TIM_Channel_t Channel)
 
 void MTIM_vIC_EnableInterrupt(TIM_Id_t TimerId, TIM_Channel_t Channel)
 {
-    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+//    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+	volatile TIMx_MemMap_t *TIMx = TIM2;
 
     switch(Channel)
     {
@@ -136,6 +139,34 @@ void MTIM_vIC_EnableInterrupt(TIM_Id_t TimerId, TIM_Channel_t Channel)
     case TIM_CHANNEL2: SET_BIT(TIMx->DIER, TIM_DIER_CC2IE); break;
     case TIM_CHANNEL3: SET_BIT(TIMx->DIER, TIM_DIER_CC3IE); break;
     case TIM_CHANNEL4: SET_BIT(TIMx->DIER, TIM_DIER_CC4IE); break;
+    }
+}
+
+
+void MTIM_vIC_EnableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel)
+{
+//    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+	 volatile TIMx_MemMap_t *TIMx = TIM2;
+
+    switch(Channel)
+    {
+    case TIM_CHANNEL1: SET_BIT(TIMx->CCER, TIM_CCER_CC1E); break;
+    case TIM_CHANNEL2: SET_BIT(TIMx->CCER, TIM_CCER_CC2E); break;
+//    case TIM_CHANNEL3: SET_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
+//    case TIM_CHANNEL4: SET_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
+    }
+}
+
+void MTIM_vIC_DisableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel)
+{
+    volatile TIMx_MemMap_t *TIMx = TIM_GetInstance(TimerId);
+
+    switch(Channel)
+    {
+    case TIM_CHANNEL1: CLR_BIT(TIMx->CCER, TIM_CCER_CC1E); break;
+    case TIM_CHANNEL2: CLR_BIT(TIMx->CCER, TIM_CCER_CC2E); break;
+//    case TIM_CHANNEL3: CLR_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
+//    case TIM_CHANNEL4: CLR_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
     }
 }
 
