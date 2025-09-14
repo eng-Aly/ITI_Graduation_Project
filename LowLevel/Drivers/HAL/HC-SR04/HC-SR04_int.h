@@ -34,7 +34,6 @@ typedef struct {
     volatile u32  isRisingCaptured;
     volatile u8  isReady;
     volatile u16 distance_cm;
-    volatile u8 first_capture;
 } HCSR04_Handle_t;
 
 
@@ -46,7 +45,6 @@ void HCSR04_vTrigger(HCSR04_Handle_t *hcsr);
 
 /* Measures distance in centimeters */
 u32 HCSR04_u32GetDistance();
-//global u32 hcsr;
 
 
 

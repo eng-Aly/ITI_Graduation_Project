@@ -16,12 +16,11 @@
 #include "HC-SR04_cfg.h"
 
 static HCSR04_Handle_t* hcsr_map[4] = {0};
-void HCSR04_IC_Handler() ;
+void HCSR04_IC_Handler(u8 ChannelId);
 
 void HCSR04_vInit(HCSR04_Handle_t *hcsr)
 {
 
-	hcsr->first_capture = 1;
 	// Trigger pin
 	GPIOx_PinConfig_t trig = {
 		.Port = hcsr->TriggerPort,
@@ -49,13 +48,13 @@ void HCSR04_vInit(HCSR04_Handle_t *hcsr)
 		.Channel   = hcsr->Channel,
 		.Polarity  = TIM_POLARITY_RISING,
 		.Prescaler = 0,
-		.Filter    = 0
-//		.TimerPrescaler = 24
+		.Filter    = 0,
+		.TimerPrescaler = 24
 	};
 	MTIM_vIC_Init(&ic_cfg);
 
 	/* --- Register handle --- */
-	hcsr_map[0] = hcsr;
+	hcsr_map[hcsr->Channel -1] = hcsr;
 
     /* --- Register callback --- */
 	MTIM_vTIMCallback(hcsr->TimerId, HCSR04_IC_Handler);
@@ -66,63 +65,55 @@ void HCSR04_vTrigger(HCSR04_Handle_t *hcsr) {
     hcsr->isRisingCaptured = 0;
     hcsr->isReady = 0;
 
-	MTIM_vIC_ClearFlag(hcsr->TimerId, hcsr->Channel);
-//    MTIM_vIC_EnableInterrupt(hcsr->TimerId, hcsr->Channel);
-    // Send 10 us
+    // Send high 10 us
     MGPIO_vSetPinValue(hcsr->TriggerPort, hcsr->TriggerPin, GPIO_HIGH);
-//    DELAY_MS(10);
-    MSYSTICK_vSetDelay_ms(10);
+    MSYSTICK_vSetDelay_us(15);
     MGPIO_vSetPinValue(hcsr->TriggerPort, hcsr->TriggerPin,GPIO_LOW);
-//    MSYSTICK_vSetDelay_us(100);
-//    DELAY_MS(10);
     TIM2->CNT = 0;
-//    MTIM_vIC_EnableInterrupt(hcsr->TimerId, hcsr->Channel);
-//    MTIM_vIC_EnableCapture(hcsr->TimerId, hcsr->Channel);
 
 }
 
-void HCSR04_IC_Handler() {
+void HCSR04_IC_Handler(u8 ChannelId) {
 
-	HCSR04_Handle_t *hcsr = hcsr_map[0];
+	HCSR04_Handle_t *hcsr = hcsr_map[ChannelId - 1];
 
-//	if (hcsr->first_capture == 1){
-//		// skip pulse by clearing interrupt and overflow flag
-//		CLR_BIT(TIM2->SR, TIM_SR_CC1IF);
-//		CLR_BIT(TIM2->SR, TIM_SR_CC1OF);
-//		// led for debugging
-//		MGPIO_vSetPinValue(GPIO_PORTA, GPIO_PIN3, GPIO_HIGH);
-//		return;
-//	}
-//
-//	else {
+	// if overcapture measurment invalid
 
-	if (0 == hcsr->isRisingCaptured) {
+	if(GET_BIT(TIM2->SR,TIM_SR_CC1OF)){
+		// wait for another rising edge
+		hcsr->isRisingCaptured = 0;
+		// set polarity to rising edge
+		CLR_BIT(TIM2->CCER,TIM_CCER_CC1P);
+		// clear flags
+		CLR_BIT(TIM2->SR,TIM_SR_CC1OF);
+		CLR_BIT(TIM2->SR,TIM_SR_CC1IF);
+	}
+
+	else if (0 == hcsr->isRisingCaptured) {
+		// set polarity to falling edge
 		SET_BIT(TIM2->CCER,TIM_CCER_CC1P);
 		MGPIO_TogPinValue(GPIO_PORTB,GPIO_PIN0);
 		// capture
 		hcsr->IC_Value1 = TIM2->CCR1;
-		// rising edge captures
+		// rising edge captured flag
 		hcsr->isRisingCaptured = 1;
-//		CLR_BIT(TIM2->SR, TIM_SR_CC1IF);
-	//		MTIM_vIC_SetPolarity(TimerId,ChannelId,TIM_POLARITY_FALLING);
-//		TIM2->CCER &= ~(TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP_Msk);
-//		TIM2->CCER |= TIM_CCER_CC1P_Msk;
-//		CLR_BIT(TIM2->CCER, TIM_CCER_CC1E);
-
-
-//		SET_BIT(TIM2->CCER, TIM_CCER_CC1E);
+		// clear flag
+		CLR_BIT(TIM2->SR, TIM_SR_CC1IF);
 
 		return;
 	}
 	else if (1 == hcsr->isRisingCaptured)
 	{
 		MGPIO_TogPinValue(GPIO_PORTB,GPIO_PIN1);
+		// capture value 2
 		hcsr->IC_Value2 = TIM2->CCR1;
+		// set ready flag
 		hcsr->isReady = 1;
+		// reset rising edge captured flag
 		hcsr->isRisingCaptured = 0;
+		// clear flag
 		CLR_BIT(TIM2->SR, TIM_SR_CC1IF);
-//		MTIM_vIC_SetPolarity(TimerId,ChannelId,TIM_POLARITY_RISING);
-//		TIM2->CCER &= ~(TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP_Msk);
+		// set polarity to rising
 		CLR_BIT(TIM2->CCER,TIM_CCER_CC1P);
 
 		if (hcsr->IC_Value2 >= hcsr->IC_Value1)
@@ -130,8 +121,9 @@ void HCSR04_IC_Handler() {
 		else
 			hcsr->IC_Diff = (0xFFFFFFFF - hcsr->IC_Value1) + hcsr->IC_Value2;
 
-		hcsr->distance_cm = (u16)((hcsr->IC_Diff * 3.40) / 2.0f);
-//		hcsr->distance_cm = (u16)(hcsr->IC_Diff / 58);
+//		hcsr->distance_cm = (u16)((hcsr->IC_Diff * 3.40) / 2.0f);
+//		hcsr->distance_cm = (u16)(hcsr->IC_Diff / 58)* 0.0625;
+		hcsr->distance_cm = (u16)(hcsr->IC_Diff / 58);
 
 		hcsr->isReady = 1;
 		hcsr->isRisingCaptured = 0;

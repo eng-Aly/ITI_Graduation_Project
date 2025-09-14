@@ -9,11 +9,13 @@
 #include "../../LIB/BIT_MATH.h"
 
 #include "../../MCAL/GPIO/GPIO_int.h"
+#include "../../HAL/HC-SR04/HC-SR04_int.h"
 #include "TIM_IC_int.h"
 #include "TIM_IC_prv.h"
 #include "TIM_IC_cfg.h"
 
-void (*G_TIMFpt[4])(void)={NULL};
+void (*G_TIMFpt[4])(u8)={NULL};
+void (*G_US[4])(void)={NULL};
 
 static inline volatile TIMx_MemMap_t* TIM_GetInstance(TIM_Id_t id) {
     switch (id) {
@@ -80,17 +82,59 @@ void MTIM_vIC_Init(const TIM_IC_Config_t *cfg)
             TIMx->CCER |= (TIM_CCER_CC2P_Msk | TIM_CCER_CC2NP_Msk);
 
         // Enable capture + interrupt
-        SET_BIT(TIMx->CCER, TIM_CCER_CC2E);
-        SET_BIT(TIMx->DIER, TIM_DIER_CC2IE);
+//        SET_BIT(TIMx->CCER, TIM_CCER_CC2E);
+//        SET_BIT(TIMx->DIER, TIM_DIER_CC2IE);
         break;
 
     case TIM_CHANNEL3:
-    	/* To be implemented */
-//
+    	/* --- CC3 configuration --- */
+		TIMx->CCMR2 &= ~TIM_CCMR2_CC3S_Msk;
+		TIMx->CCMR2 |= TIM_CCMR2_CC3S_TI3;
+
+		// Prescaler
+		TIMx->CCMR2 &= ~TIM_CCMR2_IC3PSC_Msk;
+		TIMx->CCMR2 |= (cfg->Prescaler << TIM_CCMR2_IC3PSC_Pos) & TIM_CCMR2_IC3PSC_Msk;
+
+		// Filter
+		TIMx->CCMR2 &= ~TIM_CCMR2_IC3F_Msk;
+		TIMx->CCMR2 |= (cfg->Filter << TIM_CCMR2_IC3F_Pos) & TIM_CCMR2_IC3F_Msk;
+
+		// Polarity
+		TIMx->CCER &= ~(TIM_CCER_CC3P_Msk | TIM_CCER_CC3NP_Msk);
+		if (cfg->Polarity == TIM_POLARITY_FALLING)
+			TIMx->CCER |= TIM_CCER_CC3P_Msk;
+		else if (cfg->Polarity == TIM_POLARITY_BOTH)
+			TIMx->CCER |= (TIM_CCER_CC3P_Msk | TIM_CCER_CC3NP_Msk);
+
+		// Enable capture + interrupt
+//		SET_BIT(TIMx->CCER, TIM_CCER_CC3E);
+//		SET_BIT(TIMx->DIER, TIM_DIER_CC3IE);
+
         break;
 
     case TIM_CHANNEL4:
-//        /* To be implemented */
+    	/* --- CC4 configuration --- */
+		TIMx->CCMR2 &= ~TIM_CCMR2_CC4S_Msk;
+		TIMx->CCMR2 |= TIM_CCMR2_CC4S_TI4;
+
+		// Prescaler
+		TIMx->CCMR2 &= ~TIM_CCMR2_IC4PSC_Msk;
+		TIMx->CCMR2 |= (cfg->Prescaler << TIM_CCMR2_IC4PSC_Pos) & TIM_CCMR2_IC4PSC_Msk;
+
+		// Filter
+		TIMx->CCMR2 &= ~TIM_CCMR2_IC4F_Msk;
+		TIMx->CCMR2 |= (cfg->Filter << TIM_CCMR2_IC4F_Pos) & TIM_CCMR2_IC4F_Msk;
+
+		// Polarity
+		TIMx->CCER &= ~(TIM_CCER_CC4P_Msk | TIM_CCER_CC4NP_Msk);
+		if (cfg->Polarity == TIM_POLARITY_FALLING)
+			TIMx->CCER |= TIM_CCER_CC4P_Msk;
+		else if (cfg->Polarity == TIM_POLARITY_BOTH)
+			TIMx->CCER |= (TIM_CCER_CC4P_Msk | TIM_CCER_CC4NP_Msk);
+
+		// Enable capture + interrupt
+//		SET_BIT(TIMx->CCER, TIM_CCER_CC4E);
+//		SET_BIT(TIMx->DIER, TIM_DIER_CC4IE);
         break;
     }
 
@@ -152,8 +196,8 @@ void MTIM_vIC_EnableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel)
     {
     case TIM_CHANNEL1: SET_BIT(TIMx->CCER, TIM_CCER_CC1E); break;
     case TIM_CHANNEL2: SET_BIT(TIMx->CCER, TIM_CCER_CC2E); break;
-//    case TIM_CHANNEL3: SET_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
-//    case TIM_CHANNEL4: SET_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
+    case TIM_CHANNEL3: SET_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
+    case TIM_CHANNEL4: SET_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
     }
 }
 
@@ -165,8 +209,8 @@ void MTIM_vIC_DisableCapture(TIM_Id_t TimerId, TIM_Channel_t Channel)
     {
     case TIM_CHANNEL1: CLR_BIT(TIMx->CCER, TIM_CCER_CC1E); break;
     case TIM_CHANNEL2: CLR_BIT(TIMx->CCER, TIM_CCER_CC2E); break;
-//    case TIM_CHANNEL3: CLR_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
-//    case TIM_CHANNEL4: CLR_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
+    case TIM_CHANNEL3: CLR_BIT(TIMx->CCER, TIM_CCER_CC3E); break;
+    case TIM_CHANNEL4: CLR_BIT(TIMx->CCER, TIM_CCER_CC4E); break;
     }
 }
 
@@ -206,16 +250,50 @@ void MTIM_vIC_ResetCounter(TIM_Id_t TimerId)
 void MTIM_vTIMCallback(TIM_Id_t TimerId, void(*Fptr)(void)) {
     u8 L_u8index = (TimerId==0)?0:TimerId==1?1:TimerId==2?2:3;
     G_TIMFpt[L_u8index] = Fptr;
-
 }
 
-void TIM2_IRQHandler(){
-	if(G_TIMFpt[0] != NULL)
-	{
-		G_TIMFpt[0]();
-	}
-	// clear flag
-	TIM2->SR &= ~TIM_SR_CC1IF;
+//void TIM2_IRQHandler(){
+//	if(G_TIMFpt[0] != NULL)
+//	{
+//		G_TIMFpt[0](1);
+//	}
+//	// clear flag
+//	TIM2->SR &= ~TIM_SR_CC1IF;
+//}
+
+void TIM2_IRQHandler(void)
+{
+    // Channel 1
+    if (GET_BIT(TIM2->SR, TIM_SR_CC1IF) && GET_BIT(TIM2->DIER, TIM_DIER_CC1IE))
+    {
+        if (G_TIMFpt[0] != NULL)
+            G_TIMFpt[0](1);
+        CLR_BIT(TIM2->SR, TIM_SR_CC1IF);   // Clear flag
+    }
+
+    // Channel 2
+    if (GET_BIT(TIM2->SR, TIM_SR_CC2IF) && GET_BIT(TIM2->DIER, TIM_DIER_CC2IE))
+    {
+        if (G_TIMFpt[1] != NULL)
+            G_TIMFpt[1](2);
+        CLR_BIT(TIM2->SR, TIM_SR_CC2IF);
+    }
+
+    // Channel 3
+    if (GET_BIT(TIM2->SR, TIM_SR_CC3IF) && GET_BIT(TIM2->DIER, TIM_DIER_CC3IE))
+    {
+        if (G_TIMFpt[2] != NULL)
+            G_TIMFpt[2](3);
+        CLR_BIT(TIM2->SR, TIM_SR_CC3IF);
+    }
+
+    // Channel 4
+    if (GET_BIT(TIM2->SR, TIM_SR_CC4IF) && GET_BIT(TIM2->DIER, TIM_DIER_CC4IE))
+    {
+        if (G_TIMFpt[3] != NULL)
+            G_TIMFpt[3](4);
+        CLR_BIT(TIM2->SR, TIM_SR_CC4IF);
+    }
 }
 
 //

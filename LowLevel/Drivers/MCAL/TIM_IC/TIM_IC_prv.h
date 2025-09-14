@@ -93,6 +93,25 @@ typedef struct {
 #define TIM_CCMR1_CC2S_TI1     (0x2U << TIM_CCMR1_CC2S_Pos) /* CC2 input mapped on TI1 */
 #define TIM_CCMR1_CC2S_TRC     (0x3U << TIM_CCMR1_CC2S_Pos) /* CC2 input mapped on TRC */
 
+
+/* TIMx_CCMR2 (CC3S[1:0], CC4S[1:0]) */
+#define TIM_CCMR2_CC3S_Pos     0U
+#define TIM_CCMR2_CC3S_Msk     (0x3U << TIM_CCMR2_CC3S_Pos)
+
+#define TIM_CCMR2_CC3S_OUTPUT  (0x0U << TIM_CCMR2_CC3S_Pos) /* CC3 as output */
+#define TIM_CCMR2_CC3S_TI3     (0x1U << TIM_CCMR2_CC3S_Pos) /* CC3 input mapped on TI3 */
+#define TIM_CCMR2_CC3S_TI4     (0x2U << TIM_CCMR2_CC3S_Pos) /* CC3 input mapped on TI4 */
+#define TIM_CCMR2_CC3S_TRC     (0x3U << TIM_CCMR2_CC3S_Pos) /* CC3 input mapped on TRC */
+
+#define TIM_CCMR2_CC4S_Pos     8U
+#define TIM_CCMR2_CC4S_Msk     (0x3U << TIM_CCMR2_CC4S_Pos)
+
+#define TIM_CCMR2_CC4S_OUTPUT  (0x0U << TIM_CCMR2_CC4S_Pos) /* CC4 as output */
+#define TIM_CCMR2_CC4S_TI4     (0x1U << TIM_CCMR2_CC4S_Pos) /* CC4 input mapped on TI4 */
+#define TIM_CCMR2_CC4S_TI3     (0x2U << TIM_CCMR2_CC4S_Pos) /* CC4 input mapped on TI3 */
+#define TIM_CCMR2_CC4S_TRC     (0x3U << TIM_CCMR2_CC4S_Pos) /* CC4 input mapped on TRC */
+
+
 /* TIMx_CCMR1 (IC1PSC[1:0]) */
 #define TIM_CCMR1_IC1PSC_Pos     2U
 #define TIM_CCMR1_IC1PSC_Msk     (0x3U << TIM_CCMR1_IC1PSC_Pos)
@@ -111,6 +130,24 @@ typedef struct {
 #define TIM_CCMR1_IC2PSC_DIV4    (0x2U << TIM_CCMR1_IC2PSC_Pos) /* Capture every 4 events */
 #define TIM_CCMR1_IC2PSC_DIV8    (0x3U << TIM_CCMR1_IC2PSC_Pos) /* Capture every 8 events */
 
+/* TIMx_CCMR2 (IC3PSC[1:0]) */
+#define TIM_CCMR2_IC3PSC_Pos     2U
+#define TIM_CCMR2_IC3PSC_Msk     (0x3U << TIM_CCMR2_IC3PSC_Pos)
+
+#define TIM_CCMR2_IC3PSC_DIV1    (0x0U << TIM_CCMR2_IC3PSC_Pos) /* No prescaler */
+#define TIM_CCMR2_IC3PSC_DIV2    (0x1U << TIM_CCMR2_IC3PSC_Pos) /* Capture every 2 events */
+#define TIM_CCMR2_IC3PSC_DIV4    (0x2U << TIM_CCMR2_IC3PSC_Pos) /* Capture every 4 events */
+#define TIM_CCMR2_IC3PSC_DIV8    (0x3U << TIM_CCMR2_IC3PSC_Pos) /* Capture every 8 events */
+
+/* TIMx_CCMR2 (IC4PSC[1:0]) */
+#define TIM_CCMR2_IC4PSC_Pos     10U
+#define TIM_CCMR2_IC4PSC_Msk     (0x3U << TIM_CCMR2_IC4PSC_Pos)
+
+#define TIM_CCMR2_IC4PSC_DIV1    (0x0U << TIM_CCMR2_IC4PSC_Pos)
+#define TIM_CCMR2_IC4PSC_DIV2    (0x1U << TIM_CCMR2_IC4PSC_Pos)
+#define TIM_CCMR2_IC4PSC_DIV4    (0x2U << TIM_CCMR2_IC4PSC_Pos)
+#define TIM_CCMR2_IC4PSC_DIV8    (0x3U << TIM_CCMR2_IC4PSC_Pos)
+
 /* TIMx_CCMR1 (IC1F[3:0]) */
 #define TIM_CCMR1_IC1F_Pos     4U
 #define TIM_CCMR1_IC1F_Msk     (0xFU << TIM_CCMR1_IC1F_Pos)
@@ -119,6 +156,24 @@ typedef struct {
 #define TIM_CCMR1_IC1F_FCKINT_N2  (0x1U << TIM_CCMR1_IC1F_Pos)  /* fSAMPLING=fCK_INT, N=2 */
 #define TIM_CCMR1_IC1F_FCKINT_N4  (0x2U << TIM_CCMR1_IC1F_Pos)  /* fSAMPLING=fCK_INT, N=4 */
 #define TIM_CCMR1_IC1F_FCKINT_N8  (0x3U << TIM_CCMR1_IC1F_Pos)  /* fSAMPLING=fCK_INT, N=8 */
+
+/* TIMx_CCMR2 (IC3F[3:0]) */
+#define TIM_CCMR2_IC3F_Pos       4U
+#define TIM_CCMR2_IC3F_Msk       (0xFU << TIM_CCMR2_IC3F_Pos)
+
+#define TIM_CCMR2_IC3F_NOFILTER   (0x0U << TIM_CCMR2_IC3F_Pos)
+#define TIM_CCMR2_IC3F_FCKINT_N2  (0x1U << TIM_CCMR2_IC3F_Pos)
+#define TIM_CCMR2_IC3F_FCKINT_N4  (0x2U << TIM_CCMR2_IC3F_Pos)
+#define TIM_CCMR2_IC3F_FCKINT_N8  (0x3U << TIM_CCMR2_IC3F_Pos)
+
+/* TIMx_CCMR2 (IC4F[3:0]) */
+#define TIM_CCMR2_IC4F_Pos       12U
+#define TIM_CCMR2_IC4F_Msk       (0xFU << TIM_CCMR2_IC4F_Pos)
+
+#define TIM_CCMR2_IC4F_NOFILTER   (0x0U << TIM_CCMR2_IC4F_Pos)
+#define TIM_CCMR2_IC4F_FCKINT_N2  (0x1U << TIM_CCMR2_IC4F_Pos)
+#define TIM_CCMR2_IC4F_FCKINT_N4  (0x2U << TIM_CCMR2_IC4F_Pos)
+#define TIM_CCMR2_IC4F_FCKINT_N8  (0x3U << TIM_CCMR2_IC4F_Pos)
 
 /* TIMx_CCMR1 (IC2F[3:0]) */
 #define TIM_CCMR1_IC2F_Pos       12U
@@ -136,9 +191,9 @@ typedef struct {
 #define TIM_CCER_CC1NP_Pos    3U
 #define TIM_CCER_CC1NP_Msk    (1U << TIM_CCER_CC1NP_Pos)
 
-#define TIM_CCER_POLARITY_RISING   (0U)                                      /* 00: rising */
-#define TIM_CCER_POLARITY_FALLING  (TIM_CCER_CC1P_Msk)                       /* 01: falling */
-#define TIM_CCER_POLARITY_BOTH     (TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP_Msk)  /* 11: both */
+//#define TIM_CCER_POLARITY_RISING   (0U)                                      /* 00: rising */
+//#define TIM_CCER_POLARITY_FALLING  (TIM_CCER_CC1P_Msk)                       /* 01: falling */
+//#define TIM_CCER_POLARITY_BOTH     (TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP_Msk)  /* 11: both */
 
 /* TIMx_CCER (CC2P, CC2NP) */
 #define TIM_CCER_CC2P_Pos     5U
@@ -147,9 +202,33 @@ typedef struct {
 #define TIM_CCER_CC2NP_Pos    7U
 #define TIM_CCER_CC2NP_Msk    (1U << TIM_CCER_CC2NP_Pos)
 
-#define TIM_CCER_POLARITY2_RISING   (0U)                                      /* 00: rising */
-#define TIM_CCER_POLARITY2_FALLING  (TIM_CCER_CC2P_Msk)                       /* 01: falling */
-#define TIM_CCER_POLARITY2_BOTH     (TIM_CCER_CC2P_Msk | TIM_CCER_CC2NP_Msk)  /* 11: both */
+//#define TIM_CCER_POLARITY2_RISING   (0U)                                      /* 00: rising */
+//#define TIM_CCER_POLARITY2_FALLING  (TIM_CCER_CC2P_Msk)                       /* 01: falling */
+//#define TIM_CCER_POLARITY2_BOTH     (TIM_CCER_CC2P_Msk | TIM_CCER_CC2NP_Msk)  /* 11: both */
+
+/* TIMx_CCER (CC3E, CC3P, CC3NP) */
+#define TIM_CCER_CC3E     8   /* Capture/Compare 3 output enable */
+#define TIM_CCER_CC3P_Pos 9U
+#define TIM_CCER_CC3P_Msk (1U << TIM_CCER_CC3P_Pos)
+
+#define TIM_CCER_CC3NP_Pos 11U
+#define TIM_CCER_CC3NP_Msk (1U << TIM_CCER_CC3NP_Pos)
+
+//#define TIM_CCER_POLARITY3_RISING   (0U)
+//#define TIM_CCER_POLARITY3_FALLING  (TIM_CCER_CC3P_Msk)
+//#define TIM_CCER_POLARITY3_BOTH     (TIM_CCER_CC3P_Msk | TIM_CCER_CC3NP_Msk)
+
+/* TIMx_CCER (CC4E, CC4P, CC4NP) */
+#define TIM_CCER_CC4E     12  /* Capture/Compare 4 output enable */
+#define TIM_CCER_CC4P_Pos 13U
+#define TIM_CCER_CC4P_Msk (1U << TIM_CCER_CC4P_Pos)
+
+#define TIM_CCER_CC4NP_Pos 15U
+#define TIM_CCER_CC4NP_Msk (1U << TIM_CCER_CC4NP_Pos)
+
+//#define TIM_CCER_POLARITY4_RISING   (0U)
+//#define TIM_CCER_POLARITY4_FALLING  (TIM_CCER_CC4P_Msk)
+//#define TIM_CCER_POLARITY4_BOTH     (TIM_CCER_CC4P_Msk | TIM_CCER_CC4NP_Msk)
 
 
 #endif /* MCAL_TIM_IC_TIM_IC_PRV_H_ */
